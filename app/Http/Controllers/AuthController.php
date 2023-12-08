@@ -14,14 +14,12 @@ class AuthController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'phone_number' => 'required|regex:/^((09))[0-9]{8}/|unique:users,phone_number',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string'
         ]);
 
         $user = User::create([
             'name' => $fields['name'],
             'phone_number' => $fields['phone_number'],
-            'email' => $fields['email'],
             'password' => bcrypt($fields['password'])
         ]);
 
@@ -37,14 +35,9 @@ class AuthController extends Controller
 
     public function login(Request $request) {
         $fields = $request->validate([
-            'phone_number' => 'required_if:email,null|regex:/^((09))[0-9]{8}/',
-            'email' => 'required_if:phone_number,null|string',
+            'phone_number' => 'required|regex:/^((09))[0-9]{8}/',
             'password' => 'required|string'
         ]);
-
-        //check email
-        if ($request->filled('email'))
-            $user = User::where('email', $fields['email'])->first();
 
         //check phone number
         if ($request->filled('phone_number'))
