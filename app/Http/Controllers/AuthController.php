@@ -23,14 +23,14 @@ class AuthController extends Controller
             'password' => bcrypt($fields['password'])
         ]);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $token = $user->createToken($user->name . 'apptoken')->plainTextToken;
 
         $response = [
             'user' => $user,
             'token' => $token
         ];
 
-        return response($response, 201);
+        return $this->success($response);
     }
 
     public function login(Request $request) {
@@ -45,26 +45,24 @@ class AuthController extends Controller
 
         //check password
         if(!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
-                'message' => 'Bad creds'
-            ], 401);
+            return $this->error('', 'Credentials do not match', 401);
         }
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $token = $user->createToken($user->name . 'apptoken')->plainTextToken;
 
         $response = [
             'user' => $user,
             'token' => $token
         ];
 
-        return response($response, 201);
+        return $this->success($response);
     }
 
     public function logout(Request $request) {
-        auth()->user()->tokens()->delete();
+        auth()->user()->currentAccessToken()->delete();
 
-        return [
-            'message' => "Logged Out"
-        ];
+        return $this->success([
+            'message' => 'you have successfully been logged out'
+        ]);
     }
 }
