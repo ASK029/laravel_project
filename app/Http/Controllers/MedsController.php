@@ -6,6 +6,9 @@ use App\Http\Resources\MedsResource;
 use App\Models\Med;
 use Hamcrest\Core\IsEqual;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use function Laravel\Prompts\table;
 
 class MedsController extends Controller
 {
@@ -14,7 +17,9 @@ class MedsController extends Controller
      */
     public function index(Request $request)
     {
-        $meds = Med::search($request->input('search'))->orderBy('id')->get();
+        $meds = Med::search($request->input('search'))->orderBy('id')->query(function ($query) {
+             return $query->select('id', 'commercial_name');
+         })->get();
 
         return MedsResource::collection(
             $meds

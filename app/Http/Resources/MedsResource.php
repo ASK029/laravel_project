@@ -16,7 +16,7 @@ class MedsResource extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'attributes' => [
+            'attributes' => array_filter([
                 'scientific_name' => $this->scientific_name,
                 'commercial_name' => $this->commercial_name,
                 'category' => $this->category,
@@ -26,7 +26,7 @@ class MedsResource extends JsonResource
                 'quantity_available' => $this->quantity_available,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at
-            ]
+            ])
         ];
     }
 }
