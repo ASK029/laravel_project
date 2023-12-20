@@ -84,4 +84,8 @@ class MedsController extends Controller
 
         return response(null, 204);
     }
+
+    public function test(){
+        return "hello world";
+    }
 }
