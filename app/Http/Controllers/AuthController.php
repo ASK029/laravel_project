@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -59,10 +60,20 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request) {
-        auth()->user()->currentAccessToken()->delete();
+        $request->user()->currentAccessToken()->delete();
 
         return $this->success([
             'message' => 'you have successfully been logged out'
         ]);
+    }
+
+    public function showUserData(Request $request) {
+        $response = $request->user()->tokens()->get();
+
+        $user_id = json_decode($response)[0]->tokenable_id;
+
+        $user_data = User::findOrFail($user_id);
+
+        return $user_data;
     }
 }
