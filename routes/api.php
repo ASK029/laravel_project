@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/showData', [AuthController::class, 'showUserData']);
     Route::apiResource('/blog', MedsController::class);
 });
+Route::get('/blog/cat', [MedsController::class, 'catIndex']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

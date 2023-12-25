@@ -23,10 +23,8 @@ class Med extends Model
     public function toSearchableArray()
     {
         return [
-            'scientific_name' => $this->scientific_name,
             'commercial_name' => $this->commercial_name,
-            'category' => $this->category,
-            'manufacturer_name' => $this->manufacturer_name
+            'category' => $this->category
         ];
     }
 

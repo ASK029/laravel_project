@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('phone_number')->unique();
             $table->string('password');
+            $table->string('user_type');
             $table->rememberToken();
             $table->timestamps();
         });

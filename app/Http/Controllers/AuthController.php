@@ -21,7 +21,8 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $fields['name'],
             'phone_number' => $fields['phone_number'],
-            'password' => bcrypt($fields['password'])
+            'password' => bcrypt($fields['password']),
+            'user_type'=>'pharmacist'
         ]);
 
         $token = $user->createToken($user->name . 'apptoken')->plainTextToken;

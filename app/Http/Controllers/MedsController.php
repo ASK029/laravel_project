@@ -26,11 +26,22 @@ class MedsController extends Controller
         );
     }
 
+    public function catIndex(Request $request)
+    {
+        $category = $request->input('category');
+
+        // Get all medicines from the specified category
+        $meds = Med::where('category', $category)->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        if ($request->user()->cannot('create', Med::class)) {
+            abort(403);
+        }
         $fields = $request->validate([
             'scientific_name' => 'required|string',
             'commercial_name' => 'required|string|unique:meds,commercial_name',
@@ -68,6 +79,9 @@ class MedsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request->user()->cannot('create', Med::class)) 
+            abort(403);
+        
         $med = Med::findOrFail($id);
         $med->update($request->all());
 
@@ -77,8 +91,11 @@ class MedsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+        if ($request->user()->cannot('create', Med::class)) 
+            abort(403);
+
         $med = Med::findOrFail($id);
         $med->delete();
 
