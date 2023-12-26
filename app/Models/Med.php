@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Med extends Model
 {
@@ -28,8 +29,13 @@ class Med extends Model
         ];
     }
 
-    public function orders()
+    // public function orders()
+    // {
+    //     return $this->hasMany(Order::class);
+    // }
+
+    public function users() : BelongsToMany
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsToMany(User::class,'orders')->withPivot('quantity');
     }
 }

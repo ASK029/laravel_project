@@ -24,6 +24,8 @@ return new class extends Migration
                 ->references('id')
                 ->on('meds')
                 ->onDelete('cascade');
+            $table->string('status');
+            $table->string('paid');
             $table->timestamps();
         });
     }

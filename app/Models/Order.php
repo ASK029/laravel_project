@@ -11,6 +11,9 @@ class Order extends Model
 
     protected $fillable = [
         'med_id',
-        'quantity_required'
+        'user_id',
+        'quantity_required',
+        'status',
+        'paid'
     ];
 }
