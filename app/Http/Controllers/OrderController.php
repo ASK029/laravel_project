@@ -67,7 +67,7 @@ class OrderController extends Controller
             abort(403);
         }
 
-        $orders = Order::get();
+        $orders = $orders = Order::join('meds','orders.med_id','=','meds.id')->select('meds.commercial_name','orders.*')->get(['meds.commercial_name','orders.*']);
         return response()->json(['orders' => $orders]);
     }
 
