@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Med;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\MedsResource;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -48,7 +51,7 @@ class OrderController extends Controller
             $order->med_id = $orderData['med_id'];
             $order->user_id = auth()->id();
             $order->quantity_required = $orderData['quantity_required'];
-            $order->status = "Sent!";
+            $order->status = "Received!";
             $order->paid = "No!";
             $order->save();    
          }
@@ -82,9 +85,22 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        if ($request->user()->cannot('update', Order::class)) {
+            abort(403);
+        }
+        if($request->status==='Sent!'){
+            $order=Order::findOrFail($id);
+            $med=Med::findOrFail($order->med_id);
+            $med->quantity_available -= $order->quantity_required;
+            $med->save();
+        }
+
+        $order=Order::findOrFail($id);
+        $order->update($request->all());
+
+        return true;
     }
 
     /**

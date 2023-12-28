@@ -18,7 +18,7 @@ class MedsController extends Controller
     public function index(Request $request)
     {
         $meds = Med::search($request->input('search'))->orderBy('id')->query(function ($query) {
-             return $query->select('id', 'commercial_name');
+             return $query->select('id', 'commercial_name','category');
          })->get();
 
         return MedsResource::collection(
