@@ -29,13 +29,13 @@ class Med extends Model
         ];
     }
 
-    // public function orders()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 
     public function users() : BelongsToMany
     {
-        return $this->belongsToMany(User::class,'orders')->withPivot('quantity');
+        return $this->belongsToMany(User::class,'orders')->withPivot('quantity','status','paid');
     }
 }

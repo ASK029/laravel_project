@@ -47,12 +47,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // public function orders()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
     public function meds(): BelongsToMany
     {
-        return $this->BelongsToMany(Order::class,'orders')->withPivot('quantity')->withTimestamps();
+        return $this->BelongsToMany(Order::class,'orders')->withPivot('quantity','status','paid')->withTimestamps();
     }
 }

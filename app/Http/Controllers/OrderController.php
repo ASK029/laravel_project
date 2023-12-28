@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -15,7 +16,9 @@ class OrderController extends Controller
         if ($request->user()->cannot('create', Order::class)) {
             abort(403);
         }
-        $orders = Order::where('user_id', auth()->id())->get();
+        $orders = Order::join('meds','orders.med_id','=','meds.id')->select('meds.commercial_name','orders.quantity_required','orders.status','orders.paid')->where('orders.user_id', auth()->id())
+              ->get(['meds.commercial_name','orders.*']);
+
         return response()->json(['orders' => $orders]);
     }
 
@@ -32,6 +35,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
         if ($request->user()->cannot('create', Order::class)) {
             abort(403);
         }
@@ -57,9 +61,14 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id,Request $request)//must have string in url, my mistake
     {
-        //
+        if ($request->user()->cannot('viewAny', Order::class)) {
+            abort(403);
+        }
+
+        $orders = Order::get();
+        return response()->json(['orders' => $orders]);
     }
 
     /**

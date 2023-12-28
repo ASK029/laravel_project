@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Med;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -16,4 +17,9 @@ class Order extends Model
         'status',
         'paid'
     ];
+
+    public function med()
+    {
+        return $this->belongsTo(Med::class);
+    }
 }
