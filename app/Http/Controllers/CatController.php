@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Med;
 use Illuminate\Http\Request;
+use App\Http\Resources\MedsResource;
 
 class CatController extends Controller
 {
@@ -24,7 +25,10 @@ class CatController extends Controller
         
         // Get all medicines from the specified category
         $meds = Med::where('category', $category)->get();
-        return response()->json(['meds'=>$meds]);
+        return MedsResource::collection(
+            $meds
+        );
+        // return response()->json(['meds'=>$meds]);
     }
 
 }
