@@ -26,13 +26,6 @@ class MedsController extends Controller
         );
     }
 
-    public function catIndex(Request $request)
-    {
-        $category = $request->input('category');
-
-        // Get all medicines from the specified category
-        $meds = Med::where('category', $category)->get();
-    }
 
     /**
      * Store a newly created resource in storage.

@@ -3,6 +3,7 @@
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MedsController;
 use App\Http\Controllers\OrderController;
@@ -24,7 +25,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/blog', MedsController::class);
     Route::apiResource('/order', OrderController::class);
 });
-Route::get('/blog/cat', [MedsController::class, 'catIndex']);
+Route::get('/cat', [CatController::class, 'catIndex']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
