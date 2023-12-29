@@ -25,7 +25,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/blog', MedsController::class);
     Route::apiResource('/order', OrderController::class);
 });
-Route::get('/cat', [CatController::class, 'catIndex']);
+Route::get('/cat/med', [CatController::class, 'catIndex']);
+Route::get('/cat', [CatController::class, 'getCats']);
+Route::get('/med', [CatController::class, 'getMeds']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
