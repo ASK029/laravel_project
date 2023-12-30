@@ -28,6 +28,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::get('/cat/med', [CatController::class, 'catIndex']);
 Route::get('/cat', [CatController::class, 'getCats']);
 Route::get('/med', [CatController::class, 'getMeds']);
+Route::get('/searchcats/{cat}', [CatController::class, 'searchCats']);
+Route::get('/searchcats/{cat}/{med}', [CatController::class, 'searchInCat']);
+
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

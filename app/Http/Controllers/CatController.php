@@ -19,6 +19,16 @@ class CatController extends Controller
         return $cats;
     }
 
+    public function searchCats($cat){
+        $cats=Med::select('category')->where('category', 'LIKE', '%' . $cat . '%')->distinct()->get();
+        return $cats;
+    }
+
+    public function searchInCat($cat,$med){
+        $meds=Med::where('category', 'LIKE', '%' . $cat . '%')->where('commercial_name', 'LIKE', '%' . $med . '%')->get();
+        return $meds;
+    }
+
     public function catIndex(Request $request)
     {
         $category = $request->category;
