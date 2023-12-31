@@ -23,17 +23,22 @@ use App\Http\Controllers\SalesController;
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/showData', [AuthController::class, 'showUserData']);
+
     Route::apiResource('/blog', MedsController::class);
+
     Route::apiResource('/order', OrderController::class);
+
+    Route::get('/popular', [SalesController::class, 'mostPopular']);
+    Route::get('/sales', [SalesController::class, 'getSales']);
+
 });
+Route::get('/cat', [CatController::class, 'getCats']);
 Route::get('/cat/med', [CatController::class, 'catIndex']);
 Route::get('/cat', [CatController::class, 'getCats']);
 Route::get('/med', [CatController::class, 'getMeds']);
 Route::get('/searchcats/{cat}', [CatController::class, 'searchCats']);
 Route::get('/searchcats/{cat}/{med}', [CatController::class, 'searchInCat']);
 
-Route::get('/sales', [SalesController::class, 'getSales']);
-Route::get('/popular', [SalesController::class, 'mostPopular']);
 
 
 Route::post('/register', [AuthController::class, 'register']);
