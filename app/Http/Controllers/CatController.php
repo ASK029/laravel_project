@@ -29,6 +29,20 @@ class CatController extends Controller
         return $meds;
     }
 
+    // public function searchCats($cat){
+    //     $cats=Med::select('category')->where('category', 'LIKE', '%' . $cat . '%')->distinct()->get();
+    //     return $cats;
+    // }
+
+    // public function searchInCat(Request $request){
+    //     $cat=$request->category;
+    //     $name=$request->commercial_name;
+    //     $meds = Med::where('category','LIKE','%'.$cat.'%')->where('commercial_name','LIKE','%'.$name.'%')->get();
+    //     return MedsResource::collection(
+    //         $meds
+    //     );
+    // }
+
     public function catIndex(Request $request)
     {
         $category = $request->category;

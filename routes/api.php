@@ -7,6 +7,7 @@ use App\Http\Controllers\CatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MedsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ Route::get('/cat', [CatController::class, 'getCats']);
 Route::get('/med', [CatController::class, 'getMeds']);
 Route::get('/searchcats/{cat}', [CatController::class, 'searchCats']);
 Route::get('/searchcats/{cat}/{med}', [CatController::class, 'searchInCat']);
+
+Route::get('/sales', [SalesController::class, 'getSales']);
+Route::get('/popular', [SalesController::class, 'mostPopular']);
 
 
 Route::post('/register', [AuthController::class, 'register']);
